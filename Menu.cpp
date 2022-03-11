@@ -20,7 +20,7 @@ void Menu::ShowMenuItemLabels()
 	for each (std::string itemLabel in this->ItemLabels)
 	{
 		std::cout << ++i << ". " << itemLabel << std::endl;
-	}	
+	}
 }
 
 void Menu::SelectMenuItem(unsigned short &selected_menu_item)

@@ -7,6 +7,7 @@ class Menu
 {
 private:
 	std::vector<std::string> ItemLabels;
+
 public:
 	Menu(std::vector<std::string>);
 
