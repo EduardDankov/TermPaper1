@@ -1,34 +1,34 @@
 #pragma once
 #include <string>
 
+enum class Mode
+{
+	Auto,
+	Manual,
+	Emergency
+};
+
+enum class ControlType
+{
+	Automatic,
+	Semiautomatic
+};
+
+enum class LightColor
+{
+	None,
+	Red,
+	Yellow,
+	Green,
+	Blue,
+	MoonWhite
+}; 
+
 class TrafficLight
 {
 private:
-	const static enum Mode
-	{
-		Auto,
-		Manual,
-		Emergency
-	};
-
-	const static enum ControlType 
-	{
-		Automatic,
-		Semiautomatic
-	};
-
-	const static enum LightColor
-	{
-		None,
-		Red,
-		Yellow,
-		Green,
-		Blue,
-		MoonWhite
-	};
-
-	const std::string Label;
-	const ControlType Control;
+	std::string Label;
+	ControlType Control;
 
 	Mode CurrentMode;
 	LightColor CurrentLightColor;

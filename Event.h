@@ -4,36 +4,36 @@
 #include "TrafficLight.h"
 #include <vector>
 
+enum class EventType
+{
+	// Automatic, by sensor
+	BrokenHousing,
+	BrokenLight,
+	TrainsTooClose,
+
+	// Manual, by dispatcher
+	HumanOnRails,
+	BrokenTrain
+};
+
+enum class Activator
+{
+	Sensor,
+	Dispatcher
+};
+
+enum class Status
+{
+	NotConsidered, // The event has just been initialized
+	DispatcherControl, // The event is controlled manual by dispatcher
+	SpecialService, // A special service has been sent to solve the problem
+	Solved // The problem has been solved and the event can be deactivated
+};
+
 class Event
 {
 protected:
 	static unsigned int Counter;
-
-	const static enum EventType
-	{
-		// Automatic, by sensor
-		BrokenHousing,
-		BrokenLight,
-		TrainsTooClose,
-
-		// Manual, by dispatcher
-		HumanOnRails,
-		BrokenTrain
-	};
-
-	const static enum Activator
-	{
-		Sensor,
-		Dispatcher
-	};
-
-	const static enum Status
-	{
-		NotConsidered, // The event has just been initialized
-		DispatcherControl, // The event is controlled manual by dispatcher
-		SpecialService, // A special service has been sent to solve the problem
-		Solved // The problem has been solved and the event can be deactivated
-	};
 
 	unsigned int ID;
 	bool IsSolved;

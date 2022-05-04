@@ -1,31 +1,43 @@
 #include "TrafficLight.h"
 
 /* Constructors */
-TrafficLight::TrafficLight(std::string label, ControlType controlType) : Label(label), Control(controlType) {}
+TrafficLight::TrafficLight(std::string label, ControlType controlType)
+{
+	this->Label = label;
+	this->Control = controlType;
+
+	this->CurrentLightColor = LightColor::Red;
+	this->CurrentMode = Mode::Auto;
+}
 
 /* Getters */
-TrafficLight::ControlType TrafficLight::GetControlType()
+std::string TrafficLight::GetLabel()
+{
+	return this->Label;
+}
+
+ControlType TrafficLight::GetControlType()
 {
 	return this->Control;
 }
 
-TrafficLight::Mode TrafficLight::GetCurrentMode()
+Mode TrafficLight::GetCurrentMode()
 {
 	return this->CurrentMode;
 }
 
-TrafficLight::LightColor TrafficLight::GetCurrentLightColor()
+LightColor TrafficLight::GetCurrentLightColor()
 {
 	return this->CurrentLightColor;
 }
 
 /* Setters */
-void TrafficLight::SetMode(TrafficLight::Mode mode)
+void TrafficLight::SetMode(Mode mode)
 {
 	this->CurrentMode = mode;
 }
 
-void TrafficLight::SetLightColor(TrafficLight::LightColor lightColor)
+void TrafficLight::SetLightColor(LightColor lightColor)
 {
 	this->CurrentLightColor = lightColor;
 }
