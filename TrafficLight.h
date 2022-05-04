@@ -6,7 +6,7 @@ class TrafficLight
 private:
 	const static enum Mode
 	{
-		Automatic,
+		Auto,
 		Manual,
 		Emergency
 	};

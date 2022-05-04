@@ -37,5 +37,5 @@ void Menu::SelectMenuItem(unsigned short &selected_menu_item)
 void Menu::InitMenuItem(unsigned short menu_item_id)
 {
 	// TODO: Realize method
-	std::cout << "Selected Menu Item ID: " << menu_item_id << std::endl;
+	std::cout << "Selected Menu Item \"" << Database::GetMenuItemLabels()[menu_item_id + 1] << "\" ID: " << menu_item_id << std::endl;
 }
