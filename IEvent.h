@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
+#include <vector>
 
 #include "TrafficLight.h"
-#include <vector>
 
 enum class EventType
 {
@@ -13,7 +13,8 @@ enum class EventType
 
 	// Manual, by dispatcher
 	HumanOnRails,
-	BrokenTrain
+	BrokenTrain,
+	TrainInDepot
 };
 
 enum class Activator
@@ -30,21 +31,28 @@ enum class Status
 	Solved // The problem has been solved and the event can be deactivated
 };
 
-class Event
+class IEvent
 {
-protected:
+private:
 	static unsigned int Counter;
 
+protected:
 	unsigned int ID;
-	bool IsSolved;
 
+	Status CurrentStatus;
 	EventType Reason;
 	Activator ActivatedBy;
-	Status CurrentStatus;
 
-	std::vector<TrafficLight> RelatedTrafficLights;
+	std::vector<std::reference_wrapper<TrafficLight>> RelatedTrafficLights;
+
+	IEvent(Activator, EventType, std::vector<std::reference_wrapper<TrafficLight>>);
 
 public:
-	Event(Activator, EventType, std::vector<TrafficLight>);
+	Status GetStatus() { return this->CurrentStatus; }
+	EventType GetReason() { return this->Reason; }
+	Activator GetActivator() { return this->ActivatedBy; }
+	std::vector<std::reference_wrapper<TrafficLight>> GetRelatedTrafficLights() { return this->RelatedTrafficLights; }
+
+	void SetStatus(Status status) { this->CurrentStatus = status; }
 };
 

@@ -1,10 +1,10 @@
 #pragma once
-#include "Event.h"
+#include "IEvent.h"
 
 class ManualEvent 
-	: public Event
+	: public IEvent
 {
 public:
-	ManualEvent(Activator, EventType, std::vector<TrafficLight>);
+	ManualEvent(Activator, EventType, std::vector<std::reference_wrapper<TrafficLight>>);
 };
 
