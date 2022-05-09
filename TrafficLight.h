@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include "HousingConditionSensor.h"
+#include "LightConditionSensor.h"
+#include "PassingTrainSensor.h"
 
 enum class Mode
 {
@@ -33,18 +36,19 @@ private:
 	Mode CurrentMode;
 	LightColor CurrentLightColor;
 
+	HousingConditionSensor HCSensor;
+	LightConditionSensor LCSensor;
+	PassingTrainSensor PTSensor;
+
 public:
-	/* Constructors */
 	TrafficLight(std::string, ControlType);
 
-	/* Getters */
-	std::string GetLabel();
-	ControlType GetControlType();
-	Mode GetCurrentMode();
-	LightColor GetCurrentLightColor();
+	std::string GetLabel() { return this->Label; }
+	ControlType GetControlType() { return this->Control; }
+	Mode GetCurrentMode() { return this->CurrentMode; }
+	LightColor GetCurrentLightColor() { return this->CurrentLightColor; }
 
-	/* Setters */
-	void SetMode(Mode);
-	void SetLightColor(LightColor);
+	void SetMode(Mode mode)	{ this->CurrentMode = mode;	}
+	void SetLightColor(LightColor lightColor) {	this->CurrentLightColor = lightColor; }
 };
 
