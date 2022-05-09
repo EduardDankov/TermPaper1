@@ -16,7 +16,7 @@ const std::vector<std::string> Database::MenuItemLabels = {
 	"Re-syncronize traffic lights by events list."
 };
 
-std::vector<std::reference_wrapper<TrafficLight>> Database::TrafficLights = {
+std::vector<TrafficLight> Database::TrafficLights = {
 	TrafficLight("C-1", ControlType::Semiautomatic),
 	TrafficLight("C-2", ControlType::Semiautomatic),
 	TrafficLight("M-1", ControlType::Semiautomatic),
