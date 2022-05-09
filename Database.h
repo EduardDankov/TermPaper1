@@ -8,9 +8,9 @@ class Database
 {
 private:
 	static const std::vector<std::string> MenuItemLabels;
-	static std::vector<TrafficLight> TrafficLights;
+	static std::vector<std::reference_wrapper<TrafficLight>> TrafficLights;
 
 public:
-	static std::vector<std::string> GetMenuItemLabels();
-	static std::vector<TrafficLight> GetTrafficLights();
+	static std::vector<std::string> GetMenuItemLabels()	{ return Database::MenuItemLabels; }
+	static std::vector<std::reference_wrapper<TrafficLight>> GetTrafficLights()	{ return Database::TrafficLights; }
 };
