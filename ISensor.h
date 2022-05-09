@@ -1,5 +1,4 @@
 #pragma once
-#include "TrafficLight.h"
 
 enum class SensorType
 {

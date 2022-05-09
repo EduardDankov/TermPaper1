@@ -7,4 +7,8 @@ TrafficLight::TrafficLight(std::string label, ControlType controlType)
 
 	this->CurrentLightColor = LightColor::Red;
 	this->CurrentMode = Mode::Auto;
+
+	this->HCSensor = HousingConditionSensor();
+	this->LCSensor = LightConditionSensor();
+	this->PTSensor = PassingTrainSensor();
 }

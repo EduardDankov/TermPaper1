@@ -1,5 +1,6 @@
 #pragma once
 #include "ISensor.h"
+
 class PassingTrainSensor :
     public ISensor
 {

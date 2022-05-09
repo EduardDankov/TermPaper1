@@ -1,5 +1,7 @@
 #pragma once
 #include "ISensor.h"
+
+#include <cstdlib>
 #include <ctime>
 
 class HousingConditionSensor :
