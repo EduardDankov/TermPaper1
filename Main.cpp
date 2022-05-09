@@ -5,8 +5,14 @@
 
 int main()
 {
+	std::cout << "Term Work by Eduard Ziablin (NUNG, IP-21-2, 2022)" << std::endl;
+
 	Menu menu(Database::GetMenuItemLabels());
-	menu.ActivateMenu();
+
+	while (true)
+	{
+		menu.ActivateMenu();
+	}
 
 	// TODO: Remove debug settings below
 	system("pause");
