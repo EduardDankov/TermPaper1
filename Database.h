@@ -12,5 +12,7 @@ private:
 
 public:
 	static std::vector<std::string> GetMenuItemLabels()	{ return Database::MenuItemLabels; }
-	static std::vector<TrafficLight> GetTrafficLights()	{ return Database::TrafficLights; }
+	static std::vector<TrafficLight>* GetTrafficLights()	{ return &Database::TrafficLights; }
+
+	static TrafficLight* GetTrafficLightByLabelFromCin();
 };

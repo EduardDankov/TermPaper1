@@ -48,6 +48,21 @@ void Menu::SelectMenuItem(unsigned short &selected_menu_item)
 void Menu::InitMenuItem(unsigned short menu_item_id)
 {
 	std::cout << "\n";
-	// TODO: Realize method
-	std::cout << "Selected Menu Item \"" << Database::GetMenuItemLabels()[menu_item_id - 1] << "\" ID: " << menu_item_id << std::endl;
+
+	switch (menu_item_id)
+	{
+	case 1: break;
+	case 2: break;
+	case 3: break;
+	case 4: break;
+	case 5: break;
+	case 6: TrafficLight::ChangeTLMode();
+	case 7: TrafficLight::ChangeTLLight();
+	case 8: break;
+	case 9: break;
+	case 10: TrafficLight::StopTheLine();
+	case 11: break;
+	case 12: break;
+	case 13: break;
+	}
 }

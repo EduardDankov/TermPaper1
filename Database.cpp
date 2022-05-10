@@ -78,3 +78,23 @@ std::vector<TrafficLight> Database::TrafficLights = {
 	TrafficLight("MK-12", ControlType::Semiautomatic),
 	TrafficLight("M-40", ControlType::Semiautomatic)
 };
+
+TrafficLight* Database::GetTrafficLightByLabelFromCin()
+{
+	std::string label;
+
+	do
+	{
+		std::cout << "Please, enter the traffic light label: ";
+		std::cin >> label;
+		std::cin.clear();
+
+		for (int i = 0; i < TrafficLights.size(); i++)
+		{
+			if (TrafficLights[i].GetLabel() == label)
+			{
+				return &TrafficLights[i];
+			}
+		}
+	} while (true);
+}
