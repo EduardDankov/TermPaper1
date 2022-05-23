@@ -18,14 +18,22 @@ private:
 public:
 	static SensorHandler SH;
 
-	static std::vector<std::string> GetMenuItemLabels()	{ return Database::MenuItemLabels; }
+	// Task 4: Get a list of traffic lights with solved problem
+	static void ShowSolvedEvents();
+	// Task 11: Send information about emergency events to the special service
+	static void SendReportToSpecialService();
+
+	static std::vector<std::string> GetMenuItemLabels()	{ return MenuItemLabels; }
 	static std::vector<TrafficLight>* GetTrafficLights() { return &Database::TrafficLights; }
 	static std::vector<EmergencyEvent>* GetEmergencyEvents() { return &Database::EmergencyEvents; }
 	static std::vector<ManualEvent>* GetManualEvents() { return &Database::ManualEvents; }
 
 	static void AddEmergencyEvent(Activator, EventType, TrafficLight*);
 	static void RemoveEmergencyEvent(Activator, EventType, TrafficLight*);
+	static void AddManualEvent(Activator, EventType, TrafficLight*);
+	static void RemoveManualEvent(Activator, EventType, TrafficLight*);
 
 	static TrafficLight* GetTrafficLightByLabelFromCin();
 	static EmergencyEvent* GetEmergencyEvent(Activator, EventType, TrafficLight*);
+	static ManualEvent* GetManualEvent(Activator, EventType, TrafficLight*);
 };

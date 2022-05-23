@@ -100,8 +100,37 @@ void TrafficLight::ChangeTLMode()
 	std::cout << "TL found. Current mode: " << (int)((*trafficLight).GetMode()) << std::endl;
 	Mode mode = GetModeByIdFromCin();
 
-	(*trafficLight).SetMode(mode);
-	std::cout << "Done. Mode changed to " << (int)((*trafficLight).GetMode()) << std::endl;
+	if (mode == Mode::Emergency)
+	{
+		EventType reason = IEvent::GetReasonByIdFromCinUsingMode(mode);
+
+		EmergencyEvent* event = Database::GetEmergencyEvent(Activator::Sensor, reason, trafficLight);
+		if (event == nullptr) event = Database::GetEmergencyEvent(Activator::Dispatcher, reason, trafficLight);
+
+		if (event == nullptr)
+		{
+			Database::AddEmergencyEvent(Activator::Dispatcher, reason, trafficLight);
+			std::cout << "Done [code 1]." << std::endl;
+			return;
+		}
+	}
+	if (mode == Mode::Manual)
+	{
+		EventType reason = IEvent::GetReasonByIdFromCinUsingMode(mode);
+
+		ManualEvent* event = Database::GetManualEvent(Activator::Sensor, reason, trafficLight);
+		if (event == nullptr) event = Database::GetManualEvent(Activator::Dispatcher, reason, trafficLight);
+
+		if (event == nullptr)
+		{
+			Database::AddManualEvent(Activator::Dispatcher, reason, trafficLight);
+			std::cout << "Done [code 2]." << std::endl;
+			return;
+		}
+	}
+
+	trafficLight->SetMode(mode);
+	std::cout << "Done [code 0]." << std::endl;
 }
 
 void TrafficLight::ChangeTLLight()

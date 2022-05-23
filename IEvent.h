@@ -6,13 +6,15 @@
 
 enum class EventType
 {
+	None,
+
 	// Automatic, by sensor
 	BrokenHousing,
 	BrokenLight,
 
 	// Manual, by dispatcher
 	HumanOnRails,
-	TrainInDepot
+	Violence
 };
 
 enum class Activator
@@ -51,4 +53,6 @@ public:
 	TrafficLight* GetRelatedTrafficLight() { return this->RelatedTrafficLight; }
 
 	void SetStatus(Status status) { this->CurrentStatus = status; }
+
+	static EventType GetReasonByIdFromCinUsingMode(Mode);
 };

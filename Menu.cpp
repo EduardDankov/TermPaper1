@@ -56,14 +56,14 @@ void Menu::InitMenuItem(unsigned short menu_item_id)
 	case 1: TrafficLight::ShowLightInManualLabels(); break;
 	case 2: TrafficLight::ShowLightInEmergencyLabels(); break;
 	case 3: TrafficLight::ShowBrokenTrafficLights(); break;
-	case 4: break;
+	case 4: Database::ShowSolvedEvents(); break;
 	case 5: break;
 	case 6: TrafficLight::ChangeTLMode(); break;
 	case 7: TrafficLight::ChangeTLLight(); break;
 	case 8: TrafficLight::CheckTLCondition(); break;
 	case 9: break;
 	case 10: TrafficLight::StopTheLine(); break;
-	case 11: break;
+	case 11: Database::SendReportToSpecialService(); break;
 	case 12: break;
 	case 13: break;
 	}

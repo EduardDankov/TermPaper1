@@ -7,9 +7,10 @@ void SensorHandler::CheckHousingCondition()
 	for (int i = 0; i < (*this->TrafficLights).size(); i++)
 	{
 		bool isInNormalCondition;
-		EmergencyEvent* EmergencyHousingEvent = Database::GetEmergencyEvent(Activator::Sensor, EventType::BrokenHousing, &(*this->TrafficLights)[i]);
+		EmergencyEvent* emergencyHousingEvent = Database::GetEmergencyEvent(Activator::Sensor, EventType::BrokenHousing, &(*this->TrafficLights)[i]);
+		if (emergencyHousingEvent != nullptr) emergencyHousingEvent = Database::GetEmergencyEvent(Activator::Dispatcher, EventType::BrokenHousing, &(*this->TrafficLights)[i]);
 
-		if (EmergencyHousingEvent != nullptr)
+		if (emergencyHousingEvent != nullptr)
 		{
 			isInNormalCondition = (*this->TrafficLights)[i].HCSensor.Check(true) | (*this->TrafficLights)[i].HCSensor.Check(true);
 		}
@@ -20,16 +21,17 @@ void SensorHandler::CheckHousingCondition()
 
 		if (!isInNormalCondition)
 		{
-			if (EmergencyHousingEvent == nullptr)
+			if (emergencyHousingEvent == nullptr)
 			{
 				Database::AddEmergencyEvent(Activator::Sensor, EventType::BrokenLight, &(*this->TrafficLights)[i]);
 			}
 		}
 		else
 		{
-			if (EmergencyHousingEvent != nullptr)
+			if (emergencyHousingEvent != nullptr)
 			{
-				std::cout << "Housing #" << i << " is not broken, but event is still active. Please, review the event and resync traffic lights." << std::endl;
+				emergencyHousingEvent->SetStatus(Status::Solved);
+				std::cout << "Emergency event #" << i << " has been solved. Please, update events and resync traffic lights." << std::endl;
 			}
 		}
 	}
@@ -40,9 +42,10 @@ void SensorHandler::CheckLightCondition()
 	for (int i = 0; i < (*this->TrafficLights).size(); i++)
 	{
 		bool isInNormalCondition;
-		EmergencyEvent* EmergencyLightEvent = Database::GetEmergencyEvent(Activator::Sensor, EventType::BrokenLight, &(*this->TrafficLights)[i]);
+		EmergencyEvent* emergencyLightEvent = Database::GetEmergencyEvent(Activator::Sensor, EventType::BrokenLight, &(*this->TrafficLights)[i]);
+		if (emergencyLightEvent != nullptr) emergencyLightEvent = Database::GetEmergencyEvent(Activator::Dispatcher, EventType::BrokenHousing, &(*this->TrafficLights)[i]);
 
-		if (EmergencyLightEvent != nullptr)
+		if (emergencyLightEvent != nullptr)
 		{
 			isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true) | (*this->TrafficLights)[i].LCSensor.Check(true);
 		}
@@ -53,16 +56,17 @@ void SensorHandler::CheckLightCondition()
 
 		if (!isInNormalCondition)
 		{
-			if (EmergencyLightEvent == nullptr)
+			if (emergencyLightEvent == nullptr)
 			{
 				Database::AddEmergencyEvent(Activator::Sensor, EventType::BrokenLight, &(*this->TrafficLights)[i]);
 			}
 		}
 		else
 		{
-			if (EmergencyLightEvent != nullptr)
+			if (emergencyLightEvent != nullptr)
 			{
-				std::cout << "Light #" << i << " is not broken, but event is still active. Please, review the event and resync traffic lights." << std::endl;
+				emergencyLightEvent->SetStatus(Status::Solved);
+				std::cout << "Emergency event #" << i << " has been solved. Please, update events and resync traffic lights." << std::endl;
 			}
 		}
 	}

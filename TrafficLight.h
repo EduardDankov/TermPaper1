@@ -62,7 +62,7 @@ public:
 	static void CheckTLCondition();
 	// Task 10: Stop all trains (red light)
 	static void StopTheLine();
-
+	
 	static Mode GetModeByIdFromCin();
 	static LightColor GetLightByIdFromCin();
 

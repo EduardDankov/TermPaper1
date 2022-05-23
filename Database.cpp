@@ -107,9 +107,49 @@ TrafficLight* Database::GetTrafficLightByLabelFromCin()
 	} while (true);
 }
 
+void Database::ShowSolvedEvents()
+{
+	std::cout << "Solved emergency events:\n";
+	for (int i = 0; i < EmergencyEvents.size(); i++)
+	{
+		if (EmergencyEvents[i].GetStatus() == Status::Solved)
+			std::cout << EmergencyEvents[i].GetRelatedTrafficLight()->GetLabel() << " - " << (int)EmergencyEvents[i].GetReason();
+	}
+
+	std::cout << "\nSolved manual events:\n";
+	for (int i = 0; i < ManualEvents.size(); i++)
+	{
+		if (ManualEvents[i].GetStatus() == Status::Solved)
+			std::cout << ManualEvents[i].GetRelatedTrafficLight()->GetLabel() << " - " << (int)ManualEvents[i].GetReason();
+	}
+}
+
+void Database::SendReportToSpecialService()
+{
+	for (int i = 0; i < EmergencyEvents.size(); i++)
+	{
+		if (EmergencyEvents[i].GetStatus() == Status::NotConsidered || EmergencyEvents[i].GetStatus() == Status::DispatcherControl)
+		{
+			EmergencyEvents[i].SetStatus(Status::SpecialService);
+			std::cout << "Emergency event #" << i << " has been reported to special service." << std::endl;
+		}
+	}
+	
+	for (int i = 0; i < ManualEvents.size(); i++)
+	{
+		if (ManualEvents[i].GetStatus() == Status::NotConsidered || ManualEvents[i].GetStatus() == Status::DispatcherControl)
+		{
+			ManualEvents[i].SetStatus(Status::SpecialService);
+			std::cout << "Manual event #" << i << " has been reported to special service." << std::endl;
+		}
+	}
+
+	std::cout << "Done." << std::endl;
+}
+
 void Database::AddEmergencyEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)
 {
-	Database::EmergencyEvents.push_back(EmergencyEvent(activator, event_type, traffic_light));
+	EmergencyEvents.push_back(EmergencyEvent(activator, event_type, traffic_light));
 
 	(*traffic_light).SetLightColor(LightColor::None);
 	(*traffic_light).SetMode(Mode::Emergency);
@@ -117,13 +157,35 @@ void Database::AddEmergencyEvent(Activator activator, EventType event_type, Traf
 
 void Database::RemoveEmergencyEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)
 {
-	for (int i = 0; i < Database::EmergencyEvents.size(); i++)
+	for (int i = 0; i < EmergencyEvents.size(); i++)
 	{
-		if (Database::EmergencyEvents[i].GetActivator() == activator
-			&& Database::EmergencyEvents[i].GetReason() == event_type
-			&& Database::EmergencyEvents[i].GetRelatedTrafficLight() == traffic_light)
+		if (EmergencyEvents[i].GetActivator() == activator
+			&& EmergencyEvents[i].GetReason() == event_type
+			&& EmergencyEvents[i].GetRelatedTrafficLight() == traffic_light)
 		{
-			Database::EmergencyEvents.erase(Database::EmergencyEvents.begin() + i);
+			EmergencyEvents.erase(EmergencyEvents.begin() + i);
+			break;
+		}
+	}
+}
+
+void Database::AddManualEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)
+{
+	ManualEvents.push_back(ManualEvent(activator, event_type, traffic_light));
+
+	(*traffic_light).SetLightColor(LightColor::None);
+	(*traffic_light).SetMode(Mode::Manual);
+}
+
+void Database::RemoveManualEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)
+{
+	for (int i = 0; i < ManualEvents.size(); i++)
+	{
+		if (ManualEvents[i].GetActivator() == activator
+			&& ManualEvents[i].GetReason() == event_type
+			&& ManualEvents[i].GetRelatedTrafficLight() == traffic_light)
+		{
+			ManualEvents.erase(ManualEvents.begin() + i);
 			break;
 		}
 	}
@@ -131,13 +193,24 @@ void Database::RemoveEmergencyEvent(Activator activator, EventType event_type, T
 
 EmergencyEvent* Database::GetEmergencyEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)
 {
-	for (int i = 0; i < Database::EmergencyEvents.size(); i++)
+	for (int i = 0; i < EmergencyEvents.size(); i++)
 	{
-		if (Database::EmergencyEvents[i].GetRelatedTrafficLight() == traffic_light
-			&& Database::EmergencyEvents[i].GetActivator() == activator
-			&& Database::EmergencyEvents[i].GetReason() == event_type) return &Database::EmergencyEvents[i];
+		if (EmergencyEvents[i].GetRelatedTrafficLight() == traffic_light
+			&& EmergencyEvents[i].GetActivator() == activator
+			&& EmergencyEvents[i].GetReason() == event_type) return &EmergencyEvents[i];
 	}
 	return nullptr;
 }
 
-SensorHandler Database::SH(Database::GetTrafficLights());
+ManualEvent* Database::GetManualEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)
+{
+	for (int i = 0; i < ManualEvents.size(); i++)
+	{
+		if (ManualEvents[i].GetRelatedTrafficLight() == traffic_light
+			&& ManualEvents[i].GetActivator() == activator
+			&& ManualEvents[i].GetReason() == event_type) return &ManualEvents[i];
+	}
+	return nullptr;
+}
+
+SensorHandler Database::SH(GetTrafficLights());
