@@ -1,7 +1,10 @@
 #include <iostream>
+#include <thread>
+#include <future>
 
 #include "Menu.h"
 #include "Database.h"
+#include "SensorHandler.h"
 
 int main()
 {
@@ -11,6 +14,7 @@ int main()
 
 	while (true)
 	{
+		Database::SH.Init();
 		menu.ActivateMenu();
 	}
 

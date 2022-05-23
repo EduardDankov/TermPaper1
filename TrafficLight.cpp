@@ -48,6 +48,38 @@ LightColor TrafficLight::GetLightByIdFromCin()
 	} while (true);
 }
 
+void TrafficLight::ShowLightInEmergencyLabels()
+{
+	std::vector<TrafficLight>* trafficLights = Database::GetTrafficLights();
+	for (int i = 0; i < (*trafficLights).size(); i++)
+	{
+		if ((*trafficLights)[i].GetMode() == Mode::Emergency)
+		{
+			std::cout
+				<< "Traffic light "
+				<< (*trafficLights)[i].GetLabel()
+				<< " is in emergency mode."
+				<< std::endl;
+		}
+	}
+}
+
+void TrafficLight::ShowLightInManualLabels()
+{
+	std::vector<TrafficLight>* trafficLights = Database::GetTrafficLights();
+	for (int i = 0; i < (*trafficLights).size(); i++)
+	{
+		if ((*trafficLights)[i].GetMode() == Mode::Manual)
+		{
+			std::cout
+				<< "Traffic light "
+				<< (*trafficLights)[i].GetLabel()
+				<< " is in manual mode."
+				<< std::endl;
+		}
+	}
+}
+
 void TrafficLight::ChangeTLMode()
 {
 	TrafficLight* trafficLight = Database::GetTrafficLightByLabelFromCin();

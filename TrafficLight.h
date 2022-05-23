@@ -42,8 +42,18 @@ private:
 	LightConditionSensor LCSensor;
 	PassingTrainSensor PTSensor;
 
+	friend class SensorHandler;
+
 public:
 	TrafficLight(std::string, ControlType);
+
+	// Task 1: Get a list of traffic lights in Manual Mode
+	static void ShowLightInManualLabels();
+	// Task 2: Get a list of traffic lights in Emergency Mode
+	static void ShowLightInEmergencyLabels();
+	// Task 3: Get a list of traffic lights fixed violation of the 
+	// integrity of the housing and/or serviceability of the light
+	//static void ShowLightInEmergencyLabels();
 
 	// Task 6: Change some traffic light's mode
 	static void ChangeTLMode();

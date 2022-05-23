@@ -5,7 +5,11 @@ LightConditionSensor::LightConditionSensor()
 
 bool LightConditionSensor::Check()
 {
-	std::srand(std::time(nullptr));
+	return this->Check(false);
+}
+
+bool LightConditionSensor::Check(bool isInEmergency)
+{
 	unsigned short generatedValue = std::rand() % 10000;
-	return generatedValue != 0;
+	return isInEmergency ? (generatedValue == 0) : (generatedValue != 0);
 }

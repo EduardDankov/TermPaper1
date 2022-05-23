@@ -3,9 +3,14 @@
 HousingConditionSensor::HousingConditionSensor()
 	: ISensor(SensorType::BrokenHousingDetector) {}
 
+
 bool HousingConditionSensor::Check()
 {
-	std::srand(std::time(nullptr));
+	return this->Check(false);
+}
+
+bool HousingConditionSensor::Check(bool isInEmergency)
+{
 	unsigned short generatedValue = std::rand() % 10000;
-	return generatedValue != 0;
+	return isInEmergency ? (generatedValue == 0) : (generatedValue != 0);
 }

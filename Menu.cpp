@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "SensorHandler.h"
 
 Menu::Menu(std::vector<std::string> item_labels)
 {
@@ -51,16 +52,16 @@ void Menu::InitMenuItem(unsigned short menu_item_id)
 
 	switch (menu_item_id)
 	{
-	case 1: break;
-	case 2: break;
+	case 1: TrafficLight::ShowLightInManualLabels(); break;
+	case 2: TrafficLight::ShowLightInEmergencyLabels(); break;
 	case 3: break;
 	case 4: break;
 	case 5: break;
-	case 6: TrafficLight::ChangeTLMode();
-	case 7: TrafficLight::ChangeTLLight();
-	case 8: break;
+	case 6: TrafficLight::ChangeTLMode(); break;
+	case 7: TrafficLight::ChangeTLLight(); break;
+	case 8: Database::SH.Init();
 	case 9: break;
-	case 10: TrafficLight::StopTheLine();
+	case 10: TrafficLight::StopTheLine(); break;
 	case 11: break;
 	case 12: break;
 	case 13: break;

@@ -15,5 +15,6 @@ public:
     * The housing breaks on average every 10 000 checks after fixing
     */
     bool Check() override;
+    bool Check(bool);
 };
 

@@ -79,6 +79,10 @@ std::vector<TrafficLight> Database::TrafficLights = {
 	TrafficLight("M-40", ControlType::Semiautomatic)
 };
 
+std::vector<EmergencyEvent> Database::EmergencyEvents = {
+
+};
+
 TrafficLight* Database::GetTrafficLightByLabelFromCin()
 {
 	std::string label;
@@ -98,3 +102,5 @@ TrafficLight* Database::GetTrafficLightByLabelFromCin()
 		}
 	} while (true);
 }
+
+SensorHandler Database::SH(Database::GetTrafficLights());
