@@ -8,11 +8,19 @@ void SensorHandler::CheckHousingCondition()
 	{
 		bool isInNormalCondition;
 		EmergencyEvent* emergencyHousingEvent = Database::GetEmergencyEvent(Activator::Sensor, EventType::BrokenHousing, &(*this->TrafficLights)[i]);
-		if (emergencyHousingEvent != nullptr) emergencyHousingEvent = Database::GetEmergencyEvent(Activator::Dispatcher, EventType::BrokenHousing, &(*this->TrafficLights)[i]);
+		if (emergencyHousingEvent == nullptr) emergencyHousingEvent = Database::GetEmergencyEvent(Activator::Dispatcher, EventType::BrokenHousing, &(*this->TrafficLights)[i]);
 
 		if (emergencyHousingEvent != nullptr)
 		{
-			isInNormalCondition = (*this->TrafficLights)[i].HCSensor.Check(true) | (*this->TrafficLights)[i].HCSensor.Check(true);
+			if (emergencyHousingEvent->GetStatus() == Status::SpecialService)
+			{
+				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 50);
+				std::cout << "[DEBUG] " << isInNormalCondition << std::endl;
+			}
+			else
+			{
+				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 1000);
+			}
 		}
 		else
 		{
@@ -43,11 +51,19 @@ void SensorHandler::CheckLightCondition()
 	{
 		bool isInNormalCondition;
 		EmergencyEvent* emergencyLightEvent = Database::GetEmergencyEvent(Activator::Sensor, EventType::BrokenLight, &(*this->TrafficLights)[i]);
-		if (emergencyLightEvent != nullptr) emergencyLightEvent = Database::GetEmergencyEvent(Activator::Dispatcher, EventType::BrokenHousing, &(*this->TrafficLights)[i]);
+		if (emergencyLightEvent == nullptr) emergencyLightEvent = Database::GetEmergencyEvent(Activator::Dispatcher, EventType::BrokenHousing, &(*this->TrafficLights)[i]);
 
 		if (emergencyLightEvent != nullptr)
 		{
-			isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true) | (*this->TrafficLights)[i].LCSensor.Check(true);
+			if (emergencyLightEvent->GetStatus() == Status::SpecialService)
+			{
+				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 50);
+				std::cout << "[DEBUG] " << isInNormalCondition << std::endl;
+			}
+			else
+			{
+				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 1000);
+			}
 		}
 		else
 		{
@@ -92,6 +108,8 @@ SensorHandler::SensorHandler(std::vector<TrafficLight>* trafficLights)
 
 void SensorHandler::Init()
 {
+	std::srand(std::time(nullptr));
+
 	this->CheckHousingCondition();
 	this->CheckLightCondition();
 	this->CheckPassingTrains();

@@ -64,7 +64,7 @@ void Menu::InitMenuItem(unsigned short menu_item_id)
 	case 9: break;
 	case 10: TrafficLight::StopTheLine(); break;
 	case 11: Database::SendReportToSpecialService(); break;
-	case 12: break;
+	case 12: Database::UpdateEventsLists(); break;
 	case 13: break;
 	}
 }

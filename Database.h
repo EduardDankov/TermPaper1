@@ -22,6 +22,8 @@ public:
 	static void ShowSolvedEvents();
 	// Task 11: Send information about emergency events to the special service
 	static void SendReportToSpecialService();
+	// Task 12: Update the events list
+	static void UpdateEventsLists();
 
 	static std::vector<std::string> GetMenuItemLabels()	{ return MenuItemLabels; }
 	static std::vector<TrafficLight>* GetTrafficLights() { return &Database::TrafficLights; }

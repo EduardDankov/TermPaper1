@@ -12,7 +12,7 @@ const std::vector<std::string> Database::MenuItemLabels = {
 	"Get a list of traffic lights near which are located trains.",
 	"Stop all trains (red light).",
 	"Send information about emergency events to the special service.",
-	"Update the events list.", // TODO: remove events with Solved status
+	"Update the events list.",
 	"Re-synchronize traffic lights by events list." // TODO: change traffic lights light and mode, if there are no events in vectors
 };
 
@@ -145,6 +145,31 @@ void Database::SendReportToSpecialService()
 	}
 
 	std::cout << "Done." << std::endl;
+}
+
+void Database::UpdateEventsLists()
+{
+	emergency:
+	for (int i = 0; i < EmergencyEvents.size(); i++)
+	{
+		if (EmergencyEvents[i].GetStatus() == Status::Solved)
+		{
+			RemoveEmergencyEvent(EmergencyEvents[i].GetActivator(), EmergencyEvents[i].GetReason(), EmergencyEvents[i].GetRelatedTrafficLight());
+			goto emergency;
+		}
+	}
+
+	manual:
+	for (int i = 0; i < ManualEvents.size(); i++)
+	{
+		if (ManualEvents[i].GetStatus() == Status::Solved)
+		{
+			RemoveManualEvent(ManualEvents[i].GetActivator(), ManualEvents[i].GetReason(), ManualEvents[i].GetRelatedTrafficLight());
+			goto manual;
+		}
+	}
+
+	std::cout << "Done" << std::endl;
 }
 
 void Database::AddEmergencyEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)

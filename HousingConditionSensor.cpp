@@ -11,6 +11,11 @@ bool HousingConditionSensor::Check()
 
 bool HousingConditionSensor::Check(bool isInEmergency)
 {
-	unsigned short generatedValue = std::rand() % 10000;
+	return this->Check(isInEmergency, 10000);
+}
+
+bool HousingConditionSensor::Check(bool isInEmergency, unsigned int coefficient)
+{
+	unsigned short generatedValue = std::rand() % coefficient;
 	return isInEmergency ? (generatedValue == 0) : (generatedValue != 0);
 }
