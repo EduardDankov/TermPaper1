@@ -5,6 +5,6 @@ class EmergencyEvent
 	: public IEvent
 {
 public:
-	EmergencyEvent(Activator, EventType, std::vector<std::reference_wrapper<TrafficLight>>);
+	EmergencyEvent(Activator, EventType, TrafficLight*);
 };
 

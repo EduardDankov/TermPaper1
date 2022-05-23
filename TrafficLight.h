@@ -53,12 +53,13 @@ public:
 	static void ShowLightInEmergencyLabels();
 	// Task 3: Get a list of traffic lights fixed violation of the 
 	// integrity of the housing and/or serviceability of the light
-	//static void ShowLightInEmergencyLabels();
-
+	static void ShowBrokenTrafficLights();
 	// Task 6: Change some traffic light's mode
 	static void ChangeTLMode();
 	// Task 7: Change some traffic light's light
 	static void ChangeTLLight();
+	// Task 8: Unscheduled check of serviceability of all traffic lights
+	static void CheckTLCondition();
 	// Task 10: Stop all trains (red light)
 	static void StopTheLine();
 

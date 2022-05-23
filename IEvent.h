@@ -9,11 +9,9 @@ enum class EventType
 	// Automatic, by sensor
 	BrokenHousing,
 	BrokenLight,
-	TrainsTooClose,
 
 	// Manual, by dispatcher
 	HumanOnRails,
-	BrokenTrain,
 	TrainInDepot
 };
 
@@ -42,17 +40,15 @@ protected:
 	Status CurrentStatus;
 	EventType Reason;
 	Activator ActivatedBy;
+	TrafficLight* RelatedTrafficLight;
 
-	std::vector<std::reference_wrapper<TrafficLight>> RelatedTrafficLights;
-
-	IEvent(Activator, EventType, std::vector<std::reference_wrapper<TrafficLight>>);
+	IEvent(Activator, EventType, TrafficLight*);
 
 public:
 	Status GetStatus() { return this->CurrentStatus; }
 	EventType GetReason() { return this->Reason; }
 	Activator GetActivator() { return this->ActivatedBy; }
-	std::vector<std::reference_wrapper<TrafficLight>> GetRelatedTrafficLights() { return this->RelatedTrafficLights; }
+	TrafficLight* GetRelatedTrafficLight() { return this->RelatedTrafficLight; }
 
 	void SetStatus(Status status) { this->CurrentStatus = status; }
 };
-

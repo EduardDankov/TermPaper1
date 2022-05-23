@@ -51,15 +51,13 @@ LightColor TrafficLight::GetLightByIdFromCin()
 void TrafficLight::ShowLightInEmergencyLabels()
 {
 	std::vector<TrafficLight>* trafficLights = Database::GetTrafficLights();
+
+	std::cout << "In emergency mode:" << std::endl;
 	for (int i = 0; i < (*trafficLights).size(); i++)
 	{
 		if ((*trafficLights)[i].GetMode() == Mode::Emergency)
 		{
-			std::cout
-				<< "Traffic light "
-				<< (*trafficLights)[i].GetLabel()
-				<< " is in emergency mode."
-				<< std::endl;
+			std::cout << (*trafficLights)[i].GetLabel() << std::endl;
 		}
 	}
 }
@@ -67,16 +65,32 @@ void TrafficLight::ShowLightInEmergencyLabels()
 void TrafficLight::ShowLightInManualLabels()
 {
 	std::vector<TrafficLight>* trafficLights = Database::GetTrafficLights();
+
+	std::cout << "In manual mode:" << std::endl;
 	for (int i = 0; i < (*trafficLights).size(); i++)
 	{
 		if ((*trafficLights)[i].GetMode() == Mode::Manual)
 		{
-			std::cout
-				<< "Traffic light "
-				<< (*trafficLights)[i].GetLabel()
-				<< " is in manual mode."
-				<< std::endl;
+			std::cout << (*trafficLights)[i].GetLabel() << std::endl;
 		}
+	}
+}
+
+void TrafficLight::ShowBrokenTrafficLights()
+{
+	std::vector<EmergencyEvent>* emergencyEvents = Database::GetEmergencyEvents();
+	std::vector<ManualEvent>* manualEvents = Database::GetManualEvents();
+
+	std::cout << "Emergency events:\n";
+	for (int i = 0; i < (*emergencyEvents).size(); i++)
+	{
+		std::cout << (*emergencyEvents)[i].GetRelatedTrafficLight()->GetLabel() << " - " << (int)(*emergencyEvents)[i].GetReason() << " [" << (int)(*emergencyEvents)[i].GetStatus() << "]\n";
+	}
+
+	std::cout << "\nManual events:\n";
+	for (int i = 0; i < (*manualEvents).size(); i++)
+	{
+		std::cout << (*manualEvents)[i].GetRelatedTrafficLight()->GetLabel() << " - " << (int)(*manualEvents)[i].GetReason() << " [" << (int)(*manualEvents)[i].GetStatus() << "]\n";
 	}
 }
 
@@ -98,6 +112,12 @@ void TrafficLight::ChangeTLLight()
 
 	(*trafficLight).SetLightColor(light);
 	std::cout << "Done. Light changed to " << (int)((*trafficLight).GetLightColor()) << std::endl;
+}
+
+void TrafficLight::CheckTLCondition()
+{
+	Database::SH.Init();
+	std::cout << "Done" << std::endl;
 }
 
 void TrafficLight::StopTheLine()

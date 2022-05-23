@@ -2,12 +2,12 @@
 
 unsigned int IEvent::Counter = 0;
 
-IEvent::IEvent(Activator activatedBy, EventType reason, std::vector<std::reference_wrapper<TrafficLight>> relatedTrafficLights)
+IEvent::IEvent(Activator activatedBy, EventType reason, TrafficLight* relatedTrafficLight)
 {
 	this->ID = ++IEvent::Counter;
 
 	this->CurrentStatus = Status::NotConsidered;
 	this->ActivatedBy = activatedBy;
 	this->Reason = reason;
-	this->RelatedTrafficLights = relatedTrafficLights;
+	this->RelatedTrafficLight = relatedTrafficLight;
 }

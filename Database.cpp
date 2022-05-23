@@ -4,16 +4,16 @@ const std::vector<std::string> Database::MenuItemLabels = {
 	"Get a list of traffic lights in Manual Mode.",
 	"Get a list of traffic lights in Emergency Mode.",
 	"Get a list of traffic lights fixed violation of the integrity of the housing and/or serviceability of the light.",
-	"Get a list of traffic lights with solved problem (only for auto-initialized problems).",
+	"Get a list of traffic lights with solved problem.",
 	"Get a list of stations where trains are located.",
 	"Change some traffic light's mode.",
 	"Change some traffic light's light.",
 	"Unscheduled check of serviceability of all traffic lights.",
-	"Get a list of traffic lighs near which are located trains.",
+	"Get a list of traffic lights near which are located trains.",
 	"Stop all trains (red light).",
 	"Send information about emergency events to the special service.",
-	"Update the events list.",
-	"Re-syncronize traffic lights by events list."
+	"Update the events list.", // TODO: remove events with Solved status
+	"Re-synchronize traffic lights by events list." // TODO: change traffic lights light and mode, if there are no events in vectors
 };
 
 std::vector<TrafficLight> Database::TrafficLights = {
@@ -83,6 +83,10 @@ std::vector<EmergencyEvent> Database::EmergencyEvents = {
 
 };
 
+std::vector<ManualEvent> Database::ManualEvents = {
+
+};
+
 TrafficLight* Database::GetTrafficLightByLabelFromCin()
 {
 	std::string label;
@@ -101,6 +105,39 @@ TrafficLight* Database::GetTrafficLightByLabelFromCin()
 			}
 		}
 	} while (true);
+}
+
+void Database::AddEmergencyEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)
+{
+	Database::EmergencyEvents.push_back(EmergencyEvent(activator, event_type, traffic_light));
+
+	(*traffic_light).SetLightColor(LightColor::None);
+	(*traffic_light).SetMode(Mode::Emergency);
+}
+
+void Database::RemoveEmergencyEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)
+{
+	for (int i = 0; i < Database::EmergencyEvents.size(); i++)
+	{
+		if (Database::EmergencyEvents[i].GetActivator() == activator
+			&& Database::EmergencyEvents[i].GetReason() == event_type
+			&& Database::EmergencyEvents[i].GetRelatedTrafficLight() == traffic_light)
+		{
+			Database::EmergencyEvents.erase(Database::EmergencyEvents.begin() + i);
+			break;
+		}
+	}
+}
+
+EmergencyEvent* Database::GetEmergencyEvent(Activator activator, EventType event_type, TrafficLight* traffic_light)
+{
+	for (int i = 0; i < Database::EmergencyEvents.size(); i++)
+	{
+		if (Database::EmergencyEvents[i].GetRelatedTrafficLight() == traffic_light
+			&& Database::EmergencyEvents[i].GetActivator() == activator
+			&& Database::EmergencyEvents[i].GetReason() == event_type) return &Database::EmergencyEvents[i];
+	}
+	return nullptr;
 }
 
 SensorHandler Database::SH(Database::GetTrafficLights());
