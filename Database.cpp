@@ -8,7 +8,7 @@ const std::vector<std::string> Database::MenuItemLabels = {
 	"Get a list of stations where trains are located.",
 	"Change some traffic light's mode.",
 	"Change some traffic light's light.",
-	"Unscheduled check of serviceability of all traffic lights.", // TODO: Debug and fix the bug with duplicating events
+	"Unscheduled check of serviceability of all traffic lights.",
 	"Get a list of traffic lights near which are located trains.",
 	"Stop all trains (red light).",
 	"Send information about emergency events to the special service.",

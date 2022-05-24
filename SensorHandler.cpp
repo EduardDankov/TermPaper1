@@ -18,7 +18,7 @@ void SensorHandler::CheckHousingCondition()
 			}
 			else
 			{
-				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 1000);
+				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 500);
 			}
 		}
 		else
@@ -60,7 +60,7 @@ void SensorHandler::CheckLightCondition()
 			}
 			else
 			{
-				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 1000);
+				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 500);
 			}
 		}
 		else

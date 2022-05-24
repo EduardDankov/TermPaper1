@@ -10,7 +10,7 @@ bool LightConditionSensor::Check()
 
 bool LightConditionSensor::Check(bool isInEmergency)
 {
-	return this->Check(isInEmergency, 10000);
+	return this->Check(isInEmergency, 1000);
 }
 
 bool LightConditionSensor::Check(bool isInEmergency, unsigned int coefficient)
