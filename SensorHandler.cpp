@@ -14,8 +14,7 @@ void SensorHandler::CheckHousingCondition()
 		{
 			if (emergencyHousingEvent->GetStatus() == Status::SpecialService)
 			{
-				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 50);
-				std::cout << "[DEBUG] " << isInNormalCondition << std::endl;
+				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 5);
 			}
 			else
 			{
@@ -57,8 +56,7 @@ void SensorHandler::CheckLightCondition()
 		{
 			if (emergencyLightEvent->GetStatus() == Status::SpecialService)
 			{
-				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 50);
-				std::cout << "[DEBUG] " << isInNormalCondition << std::endl;
+				isInNormalCondition = (*this->TrafficLights)[i].LCSensor.Check(true, 5);
 			}
 			else
 			{

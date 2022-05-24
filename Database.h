@@ -38,4 +38,6 @@ public:
 	static TrafficLight* GetTrafficLightByLabelFromCin();
 	static EmergencyEvent* GetEmergencyEvent(Activator, EventType, TrafficLight*);
 	static ManualEvent* GetManualEvent(Activator, EventType, TrafficLight*);
+	static EmergencyEvent* GetEmergencyEventByTL(TrafficLight*);
+	static ManualEvent* GetManualEventByTL(TrafficLight*);
 };

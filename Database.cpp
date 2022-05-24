@@ -8,12 +8,12 @@ const std::vector<std::string> Database::MenuItemLabels = {
 	"Get a list of stations where trains are located.",
 	"Change some traffic light's mode.",
 	"Change some traffic light's light.",
-	"Unscheduled check of serviceability of all traffic lights.",
+	"Unscheduled check of serviceability of all traffic lights.", // TODO: Debug and fix the bug with duplicating events
 	"Get a list of traffic lights near which are located trains.",
 	"Stop all trains (red light).",
 	"Send information about emergency events to the special service.",
 	"Update the events list.",
-	"Re-synchronize traffic lights by events list." // TODO: change traffic lights light and mode, if there are no events in vectors
+	"Re-synchronize traffic lights by events list."
 };
 
 std::vector<TrafficLight> Database::TrafficLights = {
@@ -234,6 +234,24 @@ ManualEvent* Database::GetManualEvent(Activator activator, EventType event_type,
 		if (ManualEvents[i].GetRelatedTrafficLight() == traffic_light
 			&& ManualEvents[i].GetActivator() == activator
 			&& ManualEvents[i].GetReason() == event_type) return &ManualEvents[i];
+	}
+	return nullptr;
+}
+
+EmergencyEvent* Database::GetEmergencyEventByTL(TrafficLight* traffic_light)
+{
+	for (int i = 0; i < EmergencyEvents.size(); i++)
+	{
+		if (EmergencyEvents[i].GetRelatedTrafficLight() == traffic_light) return &EmergencyEvents[i];
+	}
+	return nullptr;
+}
+
+ManualEvent* Database::GetManualEventByTL(TrafficLight* traffic_light)
+{
+	for (int i = 0; i < ManualEvents.size(); i++)
+	{
+		if (ManualEvents[i].GetRelatedTrafficLight() == traffic_light) return &ManualEvents[i];
 	}
 	return nullptr;
 }

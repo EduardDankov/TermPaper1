@@ -62,6 +62,8 @@ public:
 	static void CheckTLCondition();
 	// Task 10: Stop all trains (red light)
 	static void StopTheLine();
+	// Task 13: Re-synchronize traffic lights by events list
+	static void ResyncWithEventsList();
 	
 	static Mode GetModeByIdFromCin();
 	static LightColor GetLightByIdFromCin();

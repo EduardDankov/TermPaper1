@@ -17,8 +17,4 @@ int main()
 		Database::SH.Init();
 		menu.ActivateMenu();
 	}
-
-	// TODO: Remove debug settings below
-	system("pause");
-	return 0;
 }

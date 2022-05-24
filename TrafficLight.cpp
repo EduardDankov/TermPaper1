@@ -158,3 +158,18 @@ void TrafficLight::StopTheLine()
 	}
 	std::cout << "Done. All TL switched to red light." << std::endl;
 }
+
+void TrafficLight::ResyncWithEventsList()
+{
+	std::vector<TrafficLight>* trafficLights = Database::GetTrafficLights();
+	for (int i = 0; i < (*trafficLights).size(); i++)
+	{
+		if (((*trafficLights)[i].GetMode() == Mode::Emergency && Database::GetEmergencyEventByTL(&(*trafficLights)[i]) == nullptr)
+			|| ((*trafficLights)[i].GetMode() == Mode::Manual && Database::GetManualEventByTL(&(*trafficLights)[i]) == nullptr))
+		{
+			(*trafficLights)[i].SetMode(Mode::Auto);
+			(*trafficLights)[i].SetLightColor(LightColor::Green);
+		}
+	}
+	std::cout << "Done." << std::endl;
+}
