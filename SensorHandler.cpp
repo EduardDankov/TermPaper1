@@ -88,15 +88,7 @@ void SensorHandler::CheckLightCondition()
 
 void SensorHandler::CheckPassingTrains()
 {
-	/*for (int i = 0; i < (*this->TrafficLights).size(); i++)
-	{
-		if (!(*this->TrafficLights)[i].PTSensor.Check())
-		{
-			std::cout << "Light #" << i << " is broken." << std::endl;
-			(*this->TrafficLights)[i].SetLightColor(LightColor::None);
-			(*this->TrafficLights)[i].SetMode(Mode::Emergency);
-		}
-	}*/
+	Database::TH.CheckTrainsPosition();
 }
 
 SensorHandler::SensorHandler(std::vector<TrafficLight>* trafficLights)

@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "TrafficLight.h"
+#include "Train.h"
 
 class SensorHandler
 {

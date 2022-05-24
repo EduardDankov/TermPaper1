@@ -6,7 +6,7 @@ TrafficLight::TrafficLight(std::string label, ControlType controlType)
 	this->Label = label;
 	this->Control = controlType;
 
-	this->CurrentLightColor = LightColor::None;
+	this->CurrentLightColor = LightColor::Green;
 	this->CurrentMode = Mode::Auto;
 
 	this->HCSensor = HousingConditionSensor();
@@ -46,6 +46,27 @@ LightColor TrafficLight::GetLightByIdFromCin()
 			return (LightColor)(lightId);
 		}
 	} while (true);
+}
+
+void TrafficLight::UpdateTLColors(unsigned short train_position)
+{
+	std::vector<TrafficLight>* TrafficLights = Database::GetTrafficLights();
+	int i;
+	int count;
+
+	for (i = train_position - 1, count = 0; count < 3; i--, count++)
+	{
+		if (i < 0) i += (*TrafficLights).size();
+		(*TrafficLights)[i].SetLightColor(LightColor::Red);
+	}
+	for (i = train_position - 4, count = 0; count < 3; i--, count++)
+	{
+		if (i < 0) i += (*TrafficLights).size();
+		(*TrafficLights)[i].SetLightColor(LightColor::Yellow);
+	}
+	i = train_position - 8;
+	if (i < 0) i += (*TrafficLights).size();
+	if ((*TrafficLights)[i].GetLightColor() != LightColor::Red) (*TrafficLights)[i].SetLightColor(LightColor::Green);
 }
 
 void TrafficLight::ShowLightInEmergencyLabels()
@@ -91,6 +112,24 @@ void TrafficLight::ShowBrokenTrafficLights()
 	for (int i = 0; i < (*manualEvents).size(); i++)
 	{
 		std::cout << (*manualEvents)[i].GetRelatedTrafficLight()->GetLabel() << " - " << (int)(*manualEvents)[i].GetReason() << " [" << (int)(*manualEvents)[i].GetStatus() << "]\n";
+	}
+}
+
+void TrafficLight::ShowStationsWithTrains()
+{
+	std::vector<Train>* trains = Database::GetTrains();
+
+	std::cout << "Trains are at stations:" << std::endl;
+	for (int i = 0; i < (*trains).size(); i++)
+	{
+		unsigned short stationNumber;
+		std::string label = (*Database::GetTrafficLights())[(*trains)[i].GetCurrentTLId()].GetLabel();
+
+		if (label.find("C-") != std::string::npos)
+		{
+			stationNumber = std::ceil((std::stoi(std::string(label.begin() + 2, label.end())) + 1) / 2);
+			std::cout << "Station #" << stationNumber << std::endl;
+		}
 	}
 }
 
@@ -147,6 +186,17 @@ void TrafficLight::CheckTLCondition()
 {
 	Database::SH.Init();
 	std::cout << "Done" << std::endl;
+}
+
+void TrafficLight::ShowLightNearTrainsLabels()
+{
+	std::vector<Train>* trains = Database::GetTrains();
+
+	std::cout << "Trains are near:" << std::endl;
+	for (int i = 0; i < (*trains).size(); i++)
+	{
+		std::cout << (*Database::GetTrafficLights())[(*trains)[i].GetCurrentTLId()].GetLabel() << std::endl;
+	}
 }
 
 void TrafficLight::StopTheLine()

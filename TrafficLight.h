@@ -54,12 +54,16 @@ public:
 	// Task 3: Get a list of traffic lights fixed violation of the 
 	// integrity of the housing and/or serviceability of the light
 	static void ShowBrokenTrafficLights();
+	// Task 5: Get a list of stations where trains are located
+	static void ShowStationsWithTrains();
 	// Task 6: Change some traffic light's mode
 	static void ChangeTLMode();
 	// Task 7: Change some traffic light's light
 	static void ChangeTLLight();
 	// Task 8: Unscheduled check of serviceability of all traffic lights
 	static void CheckTLCondition();
+	// Task 9: Get a list of traffic lights near which are located trains
+	static void ShowLightNearTrainsLabels();
 	// Task 10: Stop all trains (red light)
 	static void StopTheLine();
 	// Task 13: Re-synchronize traffic lights by events list
@@ -67,6 +71,8 @@ public:
 	
 	static Mode GetModeByIdFromCin();
 	static LightColor GetLightByIdFromCin();
+
+	static void UpdateTLColors(unsigned short);
 
 	std::string GetLabel() { return this->Label; }
 	ControlType GetControlType() { return this->Control; }

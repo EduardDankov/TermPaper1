@@ -1,6 +1,4 @@
 #include <iostream>
-#include <thread>
-#include <future>
 
 #include "Menu.h"
 #include "Database.h"
@@ -14,6 +12,7 @@ int main()
 
 	while (true)
 	{
+		Database::TH.Init();
 		Database::SH.Init();
 		menu.ActivateMenu();
 	}

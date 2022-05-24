@@ -79,6 +79,11 @@ std::vector<TrafficLight> Database::TrafficLights = {
 	TrafficLight("M-40", ControlType::Semiautomatic)
 };
 
+std::vector<Train> Database::Trains = {
+	Train(TrafficLights.size() - 1),
+	Train(TrafficLights.size() / 2 - 1)
+};
+
 std::vector<EmergencyEvent> Database::EmergencyEvents = {
 
 };
@@ -257,3 +262,4 @@ ManualEvent* Database::GetManualEventByTL(TrafficLight* traffic_light)
 }
 
 SensorHandler Database::SH(GetTrafficLights());
+TrainHandler Database::TH(GetTrains());
